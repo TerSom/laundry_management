@@ -17,7 +17,7 @@ class EstateProperty(models.Model):
     garden = fields.Boolean()
     garden_area = fields.Integer()
     total_area = fields.Integer(compute='_compute_total_area')
-    best_price = fields.Float(compute='_compute_best_price' stroe=True)
+    best_price = fields.Float(compute='_compute_best_price', store=True)
     garden_orientation = fields.Selection(
         [('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
         string='Garden Orientation'
