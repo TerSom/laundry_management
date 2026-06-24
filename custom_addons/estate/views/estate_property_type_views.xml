@@ -7,6 +7,17 @@
         <field name="view_mode">list,form</field>
     </record>
 
+    <record id="estate_property_type_view_list" model="ir.ui.view">
+        <field name="name">estae.property.type</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
     <record id="estate_porpery_type_view_form" model="ir.ui.view">
         <field name="name">estate.porpery.type.view.form</field>
         <field name="model">estate.property.type</field>
@@ -18,6 +29,17 @@
                             <field name="name"/>
                         </h1>
                     </div>
+                    <notebook>
+                        <page string="Properties">
+                            <field name="property_ids">
+                                <form>
+                                    <field name="name" />
+                                    <field name="expected_price" />
+                                    <field name="state" />
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

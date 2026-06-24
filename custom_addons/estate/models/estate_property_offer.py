@@ -5,6 +5,7 @@ from odoo.exceptions import AccessError
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = 'Estater Property Offer'
+    _order = 'price desc'
 
     price = fields.Float()
     status = fields.Selection([('accepted', 'Accepted'), ('refused', 'Refused')], copy=False , readonly=True)
@@ -49,6 +50,7 @@ class EstatePropertyOffer(models.Model):
             else:
                 record.property_id.selling_price = record.price
                 record.property_id.buyer_id = record.partner_id
+                record.property_id.state = "offer_accepted"
                 record.status = 'accepted'
     
     def action_refuse(self):
@@ -56,6 +58,7 @@ class EstatePropertyOffer(models.Model):
             if record.status == 'accepted':
                 raise AccessError("sudah accepted tidak bisa refused")
             else:
+                record.property_id.state = 'offer_received'
                 record.status = 'refused'
     
     _sql_constraints = [

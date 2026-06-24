@@ -5,6 +5,7 @@ from odoo.tools.float_utils import float_compare, float_is_zero
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
+    _order = 'id desc'
 
     name = fields.Char(required=True)
     description = fields.Text()
@@ -43,6 +44,7 @@ class EstateProperty(models.Model):
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)
     tags_ids = fields.Many2many('estate.property.tag', string='Tags')
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
+    type_id = fields.Many2one('estate.property.type', 'property_ids')
 
     @api.depends('living_area','garden_area')
     def _compute_total_area(self):
