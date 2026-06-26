@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 from datetime import timedelta
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError,UserError
 
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
@@ -59,10 +59,27 @@ class EstatePropertyOffer(models.Model):
             if record.status == 'accepted':
                 raise AccessError("sudah accepted tidak bisa refused")
             else:
-                record.property_id.state = 'offer_received'
                 record.status = 'refused'
     
     _sql_constraints = [
         ('Check_price', 'CHECK(price >= 0)',
         'Price tidak boleh minus')
     ]
+
+    @api.model_create_multi
+    def create(self,vals_list):
+        for vals in vals_list:
+            property = self.env["estate.property"].browse(vals["property_id"])
+
+            if property.offer_ids:
+                
+                highest_price = max(property.offer_ids.mapped("price"))
+
+                if vals["price"] <= highest_price:
+                    raise UserError(
+                        "price harus lebih tinggii dari harga tertinggi di offer"
+                    )
+
+            property.state = 'offer_received'
+        
+        return super().create(vals_list)

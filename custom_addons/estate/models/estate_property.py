@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 from dateutil.relativedelta import relativedelta
-from odoo.exceptions import AccessError, ValidationError
+from odoo.exceptions import AccessError, ValidationError,UserError
 from odoo.tools.float_utils import float_compare, float_is_zero
 class EstateProperty(models.Model):
     _name = 'estate.property'
@@ -72,21 +72,21 @@ class EstateProperty(models.Model):
 
     def action_sold(self):
         for record in self:
-            if self.state == 'canceled':
+            if record.state == 'canceled':
                 raise AccessError("status sudah cancel gk bisa di sold")
-            elif self.state == 'sold':
+            elif record.state == 'sold':
                 raise AccessError("status sudah sold")
             else:
-                self.state = 'sold'
+                record.state = 'sold'
 
     def action_cancel(self):
         for record in self:
-            if self.state == 'sold':
+            if record.state == 'sold':
                 raise AccessError("status sudah sold gk bisa di cancel")
-            elif self.state == 'canceled':
+            elif record.state == 'canceled':
                 raise AccessError("status sudah cancel")
             else:
-                self.state = 'canceled'
+                record.state = 'canceled'
 
     _sql_constraints = [
         ('check_expected_price', 'CHECK(expected_price >= 0)',
@@ -108,3 +108,9 @@ class EstateProperty(models.Model):
                 raise ValidationError(
                     "Selling price tidak boleh kurang dari 90% expected price"
                 )
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_user_delete_(self):
+        for record in self:
+            if record.state is not ["new",'canceled']:
+                raise UserError("hanya di state new dan cancel bisa di delete")
