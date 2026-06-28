@@ -72,7 +72,6 @@ class EstatePropertyOffer(models.Model):
             property = self.env["estate.property"].browse(vals["property_id"])
 
             if property.offer_ids:
-                
                 highest_price = max(property.offer_ids.mapped("price"))
 
                 if vals["price"] <= highest_price:
@@ -83,3 +82,5 @@ class EstatePropertyOffer(models.Model):
             property.state = 'offer_received'
         
         return super().create(vals_list)
+
+    
