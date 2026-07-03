@@ -19,6 +19,7 @@ Long description of module's purpose
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        'report/estate_report_templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
