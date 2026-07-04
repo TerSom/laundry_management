@@ -31,6 +31,7 @@
                 <header>
                     <button name="action_sold" type="object" string="SOLD" invisible="state in ('offer_received`','new','sold','canceled')" />
                     <button name="action_cancel" type="object" string="CANCEL" invisible="state in ('sold','canceled')"/>
+                    <button name="action_export_excel" type="object" string="EXPORT EXCEL" class="btn-primary"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>

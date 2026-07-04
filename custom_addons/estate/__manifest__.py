@@ -4,7 +4,7 @@
     'depends': ['base'],
     'author': "Author Name",
     'category': 'Category',
-    'appliication': True,
+    'application': True,
     'description': """
     Description text
     """,
