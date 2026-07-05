@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gold_price_action" model="ir.actions.act_window">
+        <field name="name">gold.price</field>
+        <field name="res_model">gold.price</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="gold_price_view_list" model="ir.ui.view">
+        <field name="name">gold_price.view.list</field>
+        <field name="model">gold.price</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="price" />
+                <field name="currency" />
+                <field name="fetch_date" />
+            </list>
+        </field>
+    </record>
+</odoo>

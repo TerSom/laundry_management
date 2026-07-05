@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- main menu -->
+    <menuitem
+        id="gold_root_menu"
+        name="Gold Price"
+        sequence="10"/>
+
+    <!-- Advertisement -->
+    <menuitem
+        id="estate_menu_advertisements"
+        name="Advertisements"
+        parent="gold_root_menu"
+        sequence="10"
+    />
+
+    <menuitem
+        id="estate_property_menu_action"
+        name="Properties"
+        parent="estate_menu_advertisements"
+        action="gold_price.gold_price_action"
+        sequence="10"
+    />
+</odoo>
