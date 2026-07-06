@@ -13,8 +13,8 @@
             <list>
                 <field name="name" />
                 <field name="price" />
-                <field name="currency" />
-                <field name="fetch_date" />
+                <field name="symbol" />
+                <field name="updated_at" />
             </list>
         </field>
     </record>

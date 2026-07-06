@@ -25,6 +25,7 @@ Long description of module's purpose
     'data': [
         'security/ir.model.access.csv',
         'views/gold_price.xml',
+        'data/cron.xml',
         'views/gold_menus.xml',
         
     ],
