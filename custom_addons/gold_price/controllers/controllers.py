@@ -1,11 +1,14 @@
 import json
 import requests
+from dotenv import load_dotenv
+import os
 
 from odoo import http
 from odoo.http import request
 
 
 class GoldPriceController(http.Controller):
+    load_dotenv()
 
 # get api
     @http.route(
@@ -16,7 +19,7 @@ class GoldPriceController(http.Controller):
         csrf=False
     )
     def gold_price_get(self, **params):
-        url = "https://api.gold-api.com/price/XAU"
+        url = os.getenv("URL")
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
