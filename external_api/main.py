@@ -14,7 +14,6 @@ common = xmlrpc.client.ServerProxy(
 )
 
 version = common.version()
-
 print(version)
 
 uid = common.authenticate(
@@ -23,5 +22,15 @@ uid = common.authenticate(
     password,
     {}
 )
-
 print(uid)
+
+models = xmlrpc.client.ServerProxy(
+    f"{url}/xmlrpc/2/object"
+)
+print(models)
+
+models.execute_kw(db,uid,password,'res.partner','name_search',['foo'],{'limit' : 10})
+
+partner_ids = models.execute_kw(db,uid,password,'res.partner','search',[[['is_company','=', True]]], {'offset': 2, 'limit' : 10})
+
+count = models.execute_kw(db,uid,password,'res.partner','search_count',[[['is_company','=', True]]])

@@ -1,5 +1,7 @@
 from odoo import fields, models
 import requests
+from dotenv import load_dotenv
+import os
 
 class GoldPrice(models.Model):
     _name = "gold.price"
@@ -11,9 +13,10 @@ class GoldPrice(models.Model):
     currency = fields.Char()
     updated_at = fields.Char()
 
+
     def cron_sync_gold_price(self):
 
-        url = "https://api.gold-api.com/price/XAU"
+        url = os.getenv("URL")
 
         response = requests.get(url, timeout=10)
         response.raise_for_status()
