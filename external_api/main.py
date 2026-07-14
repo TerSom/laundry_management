@@ -43,4 +43,10 @@ field_get = models.execute_kw(db,uid,password,'gold.price','fields_get',[],{'att
 search_read = models.execute_kw(db,uid,password,'res.partner','search_read',[[['is_company','=',True]]], {'fields' : ['name', 'country_id', 'comment'], 'limit' : 5})
 
 id = models.execute_kw(db,uid,password,'res.partner','create',[{'name' : "new partner gg"}])
-print(id)
+
+models.execute_kw(db,uid,password,'res.partner','write',[[id],{'name' : "Kocak"}])
+read = models.execute_kw(db, uid, password, 'res.partner', 'read', [[id], ['display_name']])
+
+models.execute_kw(db, uid, password, 'res.partner', 'unlink', [[id]])
+search = models.execute_kw(db, uid, password, 'res.partner', 'search', [[['id', '=', id]]])
+print(search)

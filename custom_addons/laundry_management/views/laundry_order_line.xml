@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="laundry_order_line_view_list" model="ir.ui.view">
+        <field name="name">laundry.order.line.view.list</field>
+        <field name="model">laundry.order.line</field>
+        <field name="arch" type="xml">
+            <list string=""> 
+                <field name="service_id" />
+                <field name="quantity" />
+                <field name="price_unit" />
+                <field name="subtotal" />
+            </list>
+        </field>
+    </record>
+
+</odoo>

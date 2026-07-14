@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="laundry_order_action" model="ir.actions.act_window">
+        <field name="name">landry.order.action</field>
+        <field name="res_model">laundry.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="laundry_order_view_list" model="ir.ui.view">
+        <field name="name">laundry.order.view.list</field>
+        <field name="model">laundry.order</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name" />
+                <field name="partner_id" />
+            </list>
+        </field>
+    </record>
+
+    <record id="laundry_order_view_form" model="ir.ui.view">
+        <field name="name">laundry.order.view.form</field>
+        <field name="model">laundry.order</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" />
+                            <field name="date_received" />
+                        </group>
+                        <group>
+                            <field name="state" />
+                            <field name="total_price" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Items">
+                            <field name="line_ids" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

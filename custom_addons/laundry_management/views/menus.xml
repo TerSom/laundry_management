@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- main menu -->
+    <menuitem
+        id="laundry_order_menu"
+        name="Laundry"
+        sequence="10"/>
+
+    <!-- Services -->
+    <menuitem
+        id="laundry_service_menu_services"
+        name="Services"
+        parent="laundry_order_menu"
+        action="laundry_service_action"
+        sequence="10"/>
+
+    <!-- Orders -->
+    <menuitem
+        id="laundry_order_menu_orders"
+        name="Orders"
+        parent="laundry_order_menu"
+        action="laundry_order_action"
+        sequence="10"/>
+
+</odoo>
