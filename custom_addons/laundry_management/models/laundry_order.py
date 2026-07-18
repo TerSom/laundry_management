@@ -30,3 +30,35 @@ class LaundryOrder(models.Model):
         for record in self:
             record.total_price = sum(record.line_ids.mapped('subtotal'))
 
+    @api.model_create_multi
+    def create(self,vals_list):
+        for vals in vals_list:
+            if vals.get("name", "New") == "New":
+                vals["name"] = self.env['ir.sequence'].next_by_code("laundry.order") or "New"
+
+        return super().create(vals_list)
+
+    def action_received(self):
+        for record in self:
+            record.state = "received"
+
+    def action_washing(self):
+        for record in self:
+            record.state = 'washing'
+
+    def action_drying(self):
+        for record in self:
+            record.state = 'drying'
+
+    def action_ironing(self):
+        for record in self:
+            record.state = 'ironing'
+
+    def action_ready(self):
+        for record in self:
+            record.state = 'ready'
+
+    def action_delivered(self):
+        for record in self:
+            record.state = 'delivered'
+

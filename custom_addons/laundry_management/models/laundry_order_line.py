@@ -17,3 +17,8 @@ class LaundryOrderLine(models.Model):
     def _compute_subtotal(self):
         for record in self:
             record.subtotal = record.quantity * record.price_unit
+
+    @api.onchange('service_id')
+    def _onchange_service(self):
+        for record in self:
+            record.price_unit = record.service_id.price

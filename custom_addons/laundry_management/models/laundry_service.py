@@ -12,5 +12,5 @@ class LaundryService(models.Model):
             ('item', 'Item')
         ],required=True
     )
-    active = fields.Boolean()
+    active = fields.Boolean(default=True)
     description = fields.Text()

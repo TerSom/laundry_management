@@ -24,6 +24,7 @@ Long description of module's purpose
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/sequence.xml',
         'views/laundry_order_line.xml',
         'views/laundry_service_views.xml',
         'views/laundry_order_views.xml',
