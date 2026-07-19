@@ -24,6 +24,16 @@ class LaundryOrder(models.Model):
     total_price = fields.Float(
         compute="_compute_total"
     )
+    order_count = fields.Integer(
+        compute="_compute_order_count"
+    )
+
+    @api.depends('partner_id')
+    def _compute_order_count(self):
+        for record in self:
+            record.order_count = self.env['laundry.order'].search_count([
+                ("partner_id", "=", record.partner_id.id)
+            ])
 
     @api.depends('line_ids.subtotal')
     def _compute_total(self):
@@ -61,4 +71,17 @@ class LaundryOrder(models.Model):
     def action_delivered(self):
         for record in self:
             record.state = 'delivered'
+
+    def action_view_customer_order(self):
+        self.ensure_one()
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Customer Orders",
+            "res_model": "laundry.order",
+            "view_mode": "list,form",
+            "domain": [
+            ("partner_id", "=", self.partner_id.id)
+            ],
+        }
 

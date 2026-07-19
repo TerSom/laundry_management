@@ -4,7 +4,7 @@ class LaundryOrderLine(models.Model):
     _name = 'laundry.order.line'
     _description = 'Laundry Order Line'
 
-    order_id = fields.Many2one('laundry.order', string='Order', required=True, ondelete="cascade")
+    order_id = fields.Many2one('laundry.order', string='Order', required=True, ondelete="cascade", readonly=True)
     service_id = fields.Many2one('laundry.service', string='service', required=True)
     quantity = fields.Float(string="Quantity", default=1.0)
     price_unit = fields.Float(string="Unit Price")
