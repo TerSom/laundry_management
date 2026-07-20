@@ -1,4 +1,5 @@
-from odoo import models,fields,api
+from odoo import models,fields,api,Command
+from odoo.exceptions import ValidationError
 
 class LaundryOrder(models.Model):
     _name = 'laundry.order'
@@ -27,6 +28,7 @@ class LaundryOrder(models.Model):
     order_count = fields.Integer(
         compute="_compute_order_count"
     )
+    invoice_id = fields.Many2one('account.move', string="invoice", readonly=True, copy=False)
 
     @api.depends('partner_id')
     def _compute_order_count(self):
@@ -70,7 +72,40 @@ class LaundryOrder(models.Model):
 
     def action_delivered(self):
         for record in self:
+            if not record.partner_id:
+                raise ValidationError("Please select a customer first.")
+
+            if not record.line_ids:
+                raise ValidationError("Please add at least one service.")
+
+            invoice_lines = []
+            for line in record.line_ids:
+                invoice_lines.append(
+                    Command.create({
+                        'name': line.service_id.name,
+                        'quantity': line.quantity,
+                        'price_unit': line.price_unit,
+                    })
+                )
+
+            invoice = self.env['account.move'].create({
+                'partner_id': record.partner_id.id,
+                'invoice_date': fields.Date.today(),
+                'move_type': 'out_invoice',
+                'invoice_line_ids': invoice_lines,
+            })
+
+            record.invoice_id = invoice
             record.state = 'delivered'
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Customer Invoice",
+            "res_model": "account.move",
+            "res_id": invoice.id,
+            "view_mode": "form",
+            "target": "current",
+        }
 
     def action_view_customer_order(self):
         self.ensure_one()
@@ -84,4 +119,3 @@ class LaundryOrder(models.Model):
             ("partner_id", "=", self.partner_id.id)
             ],
         }
-
