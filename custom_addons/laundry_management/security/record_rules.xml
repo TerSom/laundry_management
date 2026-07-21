@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="laundry_order_user_rule" model="ir.rule">
+        <field name="name">Laundry Order User Rule</field>
+        <field name="model_id" ref="model_laundry_order"/>
+        <field name="groups" eval="[(4, ref('laundry_management.group_laundry_user'))]"/>
+        <field name="domain_force">
+            [('create_uid', '=', user.id)]
+        </field>
+    </record>
+
+    <record id="laundry_order_manager_rule" model="ir.rule">
+        <field name="name">Laundry Manager Rule</field>
+        <field name="model_id" ref="model_laundry_order"/>
+        <field name="groups" eval="[(4, ref('laundry_management.group_laundry_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

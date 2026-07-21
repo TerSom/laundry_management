@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Laundry User -->
+    <record id="group_laundry_user" model="res.groups">
+        <field name="name">Laundry User</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+
+    <!-- Laundry Manager -->
+    <record id="group_laundry_manager" model="res.groups">
+        <field name="name">Laundry Manager</field>
+
+        <!-- Manager otomatis punya hak User -->
+        <field name="implied_ids"
+               eval="[(4, ref('group_laundry_user'))]"/>
+
+        <field name="category_id"
+               ref="base.module_category_services"/>
+    </record>
+
+</odoo>
