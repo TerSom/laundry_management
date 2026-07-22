@@ -30,6 +30,8 @@ Long description of module's purpose
         'views/laundry_order_line.xml',
         'views/laundry_service_views.xml',
         'views/laundry_order_views.xml',
+        'report/laundry_report.xml',
+        'report/laundry_templates.xml',
         'views/menus.xml'
     ],
     # only loaded in demonstration mode

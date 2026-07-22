@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_laundry_receipt" model="ir.actions.report">
+            <field name="name">Laundry Receipt</field>
+            <field name="model">laundry.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">laundry_management.report_laundry_receipt</field>
+            <field name="report_file">laundry_management.report_laundry_receipt</field>
+            <field name="binding_model_id" ref="model_laundry_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
