@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 class LaundryOrder(models.Model):
     _name = 'laundry.order'
     _description = 'Laundry Order'
+    _inherit = ['mail.thread','mail.activity.mixin']
 
     name = fields.Char(string="Order Number", required=True, copy=False, readonly=True, default="New")
     partner_id = fields.Many2one('res.partner', string="Customer",required=True)
@@ -119,3 +120,12 @@ class LaundryOrder(models.Model):
             ("partner_id", "=", self.partner_id.id)
             ],
         }
+
+    def action_send_email(self):
+        self.ensure_one()
+
+        template = self.env.ref(
+            "laundry_management.email_template_laundry_ready"
+        )
+
+        template.send_mail(self.id, force_send=True)

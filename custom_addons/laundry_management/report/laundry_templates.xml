@@ -61,7 +61,7 @@
                             <span>
                                 <strong>TOTAL :</strong>
                             </span>
-                            Rp <span t-field="e.total_price"></span>
+                            <span t-esc="'Rp ' + '{:,}'.format(int(e.total_price)).replace(',', '.')"/>
                         </div>
                     </div>
                 </t>

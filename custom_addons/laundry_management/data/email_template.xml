@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_laundry_ready" model="mail.template">
+        <field name="name">Laundry Ready</field>
+        <field name="model_id" ref="model_laundry_order"/>
+        <field name="email_from">{{ user.email }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="subject">
+            Laundry Ready - {{ object.name }}
+        </field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif;">
+                <p>
+                    Hello
+                    <strong>
+                        <t t-out="object.partner_id.name"/>
+                    </strong>,
+                </p>
+                <p>
+                    Your laundry has been completed.
+                </p>
+                <p>
+                    <strong>Order :</strong>
+                    <t t-out="object.name"/>
+                </p>
+                <p>
+                    <strong>Total :</strong>
+                    <t t-out="object.total_price"/>
+                </p>
+                <p>
+                    Thank you for using our laundry service.
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

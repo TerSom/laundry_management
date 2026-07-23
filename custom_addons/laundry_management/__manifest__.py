@@ -19,7 +19,7 @@ Long description of module's purpose
     'application': True,
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account'],
+    'depends': ['base','account','mail'],
 
     # always loaded
     'data': [
@@ -32,6 +32,7 @@ Long description of module's purpose
         'views/laundry_order_views.xml',
         'report/laundry_report.xml',
         'report/laundry_templates.xml',
+        'data/email_template.xml',
         'views/menus.xml'
     ],
     # only loaded in demonstration mode
