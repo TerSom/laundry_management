@@ -33,6 +33,8 @@ Long description of module's purpose
         'report/laundry_report.xml',
         'report/laundry_templates.xml',
         'data/email_template.xml',
+        'data/email_template_due_reminder.xml',
+        'data/cron.xml',
         'views/menus.xml'
     ],
     # only loaded in demonstration mode

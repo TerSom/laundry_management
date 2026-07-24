@@ -52,6 +52,7 @@
                     </group>
                     <group>
                         <field name="total_price" />
+                        <field name="delivered_date" invisible="state != 'delivered'" />
                     </group>
                 </group>
                 <notebook>

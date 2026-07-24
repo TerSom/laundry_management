@@ -1,5 +1,6 @@
 from odoo import models,fields,api,Command
 from odoo.exceptions import ValidationError
+from datetime import timedelta
 
 class LaundryOrder(models.Model):
     _name = 'laundry.order'
@@ -30,6 +31,7 @@ class LaundryOrder(models.Model):
         compute="_compute_order_count"
     )
     invoice_id = fields.Many2one('account.move', string="invoice", readonly=True, copy=False)
+    delivered_date = fields.Datetime(readonly=False,string="Delivered Date")
 
     @api.depends('partner_id')
     def _compute_order_count(self):
@@ -98,6 +100,7 @@ class LaundryOrder(models.Model):
 
             record.invoice_id = invoice
             record.state = 'delivered'
+            record.delivered_date = fields.Datetime.now()
 
         return {
             "type": "ir.actions.act_window",
@@ -129,3 +132,18 @@ class LaundryOrder(models.Model):
         )
 
         template.send_mail(self.id, force_send=True)
+
+    def cron_send_reminder(self):
+        limit_date = fields.Datetime.now() - timedelta(days=3)
+
+        orders = self.search([
+            ("state", "=", "delivered"),
+            ("delivered_date", "<=", limit_date),
+        ])
+
+        template = self.env.ref(
+            "laundry_management.email_template_reminder"
+        )
+
+        for order in orders:
+            template.send_mail(order.id, force_send=True)
