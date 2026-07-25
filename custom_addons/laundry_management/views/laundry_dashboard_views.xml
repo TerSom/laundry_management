@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View -->
+    <record id="view_laundry_dashboard_form" model="ir.ui.view">
+        <field name="name">laundry.dashboard.form</field>
+        <field name="model">laundry.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Laundry Dashboard" create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="o_form_sheet_bg">
+                        <!-- Header Title -->
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 8px; margin-bottom: 30px; color: white;">
+                            <h1 style="margin: 0; font-size: 32px; font-weight: bold;">📊 Dashboard Laundry Management</h1>
+                            <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">Pantau semua metrik penting bisnis laundry Anda</p>
+                        </div>
+
+                        <!-- KPI Cards Section -->
+                        <div style="margin-bottom: 30px;">
+                            <h3 style="color: #333; margin-bottom: 20px; font-weight: bold;">📈 Ringkasan Umum</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                <!-- Total Orders Card -->
+                                <div style="background: white; border-left: 5px solid #3498db; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <p style="margin: 0; color: #666; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Total Pesanan</p>
+                                            <field name="total_orders" readonly="1" style="font-size: 28px; font-weight: bold; color: #3498db; margin-top: 10px;"/>
+                                        </div>
+                                        <div style="font-size: 40px; opacity: 0.3;">📦</div>
+                                    </div>
+                                </div>
+
+                                <!-- Total Customers Card -->
+                                <div style="background: white; border-left: 5px solid #27ae60; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <p style="margin: 0; color: #666; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Total Pelanggan</p>
+                                            <field name="total_customers" readonly="1" style="font-size: 28px; font-weight: bold; color: #27ae60; margin-top: 10px;"/>
+                                        </div>
+                                        <div style="font-size: 40px; opacity: 0.3;">👥</div>
+                                    </div>
+                                </div>
+
+                                <!-- Total Revenue Card -->
+                                <div style="background: white; border-left: 5px solid #f39c12; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <p style="margin: 0; color: #666; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Total Pendapatan</p>
+                                            <field name="total_revenue" readonly="1" style="font-size: 28px; font-weight: bold; color: #f39c12; margin-top: 10px;"/>
+                                        </div>
+                                        <div style="font-size: 40px; opacity: 0.3;">💰</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order Status Section -->
+                        <div>
+                            <h3 style="color: #333; margin-bottom: 20px; font-weight: bold;">📋 Status Pesanan</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                                <!-- Pending Card -->
+                                <div style="background: white; border-top: 4px solid #e74c3c; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center;">
+                                    <p style="margin: 0; color: #e74c3c; font-size: 14px; text-transform: uppercase; font-weight: bold;">⏳ Pending</p>
+                                    <field name="pending_orders" readonly="1" style="font-size: 32px; font-weight: bold; color: #e74c3c; margin-top: 15px;"/>
+                                </div>
+
+                                <!-- Processing Card -->
+                                <div style="background: white; border-top: 4px solid #3498db; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center;">
+                                    <p style="margin: 0; color: #3498db; font-size: 14px; text-transform: uppercase; font-weight: bold;">🔄 Processing</p>
+                                    <field name="processing_orders" readonly="1" style="font-size: 32px; font-weight: bold; color: #3498db; margin-top: 15px;"/>
+                                </div>
+
+                                <!-- Delivered Card -->
+                                <div style="background: white; border-top: 4px solid #27ae60; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center;">
+                                    <p style="margin: 0; color: #27ae60; font-size: 14px; text-transform: uppercase; font-weight: bold;">✅ Delivered</p>
+                                    <field name="delivered_orders" readonly="1" style="font-size: 32px; font-weight: bold; color: #27ae60; margin-top: 15px;"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Info -->
+                        <div style="margin-top: 30px; padding: 15px; background: #ecf0f1; border-radius: 8px; border-left: 4px solid #34495e;">
+                            <p style="margin: 0; color: #34495e; font-size: 13px;">
+                                <strong>💡 Tips:</strong> Dashboard ini menampilkan data real-time dari semua pesanan laundry Anda. Refresh halaman untuk memperbarui data.
+                            </p>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_laundry_dashboard_server" model="ir.actions.server">
+        <field name="name">Dashboard</field>
+        <field name="model_id" ref="model_laundry_dashboard"/>
+        <field name="state">code</field>
+        <field name="code">action = model.open_dashboard()</field>
+    </record>
+
+</odoo>

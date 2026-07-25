@@ -5,7 +5,7 @@
     <menuitem
         id="laundry_order_menu"
         name="Laundry"
-        sequence="10"/>
+        sequence="1"/>
 
     <!-- Services -->
     <menuitem
@@ -13,7 +13,7 @@
         name="Services"
         parent="laundry_order_menu"
         action="laundry_service_action"
-        sequence="10"/>
+        sequence="4"/>
 
     <!-- Orders -->
     <menuitem
@@ -21,6 +21,14 @@
         name="Orders"
         parent="laundry_order_menu"
         action="laundry_order_action"
-        sequence="10"/>
+        sequence="3"/>
+
+    <!-- dashboard -->
+    <menuitem
+        id="laundry_dashboard_laundry_dashboard"
+        name="Dashboard"
+        parent="laundry_order_menu"
+        action="action_laundry_dashboard_server"
+        sequence="2"/>
 
 </odoo>
