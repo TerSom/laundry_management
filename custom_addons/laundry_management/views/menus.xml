@@ -5,7 +5,7 @@
     <menuitem
         id="laundry_order_menu"
         name="Laundry"
-        sequence="1"/>
+        sequence="10"/>
 
     <!-- Services -->
     <menuitem
@@ -13,7 +13,7 @@
         name="Services"
         parent="laundry_order_menu"
         action="laundry_service_action"
-        sequence="4"/>
+        sequence="12"/>
 
     <!-- Orders -->
     <menuitem
@@ -21,14 +21,31 @@
         name="Orders"
         parent="laundry_order_menu"
         action="laundry_order_action"
-        sequence="3"/>
+        sequence="13"/>
 
     <!-- dashboard -->
     <menuitem
-        id="laundry_dashboard_laundry_dashboard"
+        id="laundry_dashboard_menu_dashboards"
         name="Dashboard"
         parent="laundry_order_menu"
         action="action_laundry_dashboard_server"
-        sequence="2"/>
+        sequence="11"/>
+    
+    <!-- Report -->
+    <menuitem
+        id="laundry_report_menu_reports"
+        name="Reports"
+        parent="laundry_order_menu"
+        sequence="20"
+        />
 
+    <!-- Export Order -->
+    <menuitem
+        id="laundry_exrpot_report_menu"
+        name="Export Order"
+        parent="laundry_report_menu_reports"
+        action="action_export_report_wizard"
+        sequence="10"/>
+        
+    
 </odoo>

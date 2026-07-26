@@ -35,6 +35,7 @@ Long description of module's purpose
         'data/email_template.xml',
         'data/email_template_due_reminder.xml',
         'views/laundry_dashboard_views.xml',
+        'views/export_report_wizard.xml',
         'data/cron.xml',
         'views/menus.xml'
     ],

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_export_report_wizard" model="ir.actions.act_window">
+        <field name="name">Export Report</field>
+        <field name="res_model">export.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="export_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">export.report.wizard.view.form</field>
+        <field name="model">export.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Export Laundry Report">
+                <group>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                    <field name="partner_id"/>
+                </group>
+                <footer>
+                    <button string="Export Excel" name="action_export_excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
