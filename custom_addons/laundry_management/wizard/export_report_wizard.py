@@ -26,7 +26,7 @@ class ExportReportWizard(models.TransientModel):
         ("ironing", "Ironing"),
         ("ready", "Ready"),
         ("delivered", "Delivered"),
-    ], string="Status")
+    ], string="Status",required=True)
 
     partner_id = fields.Many2one(
         "res.partner",
@@ -76,7 +76,7 @@ class ExportReportWizard(models.TransientModel):
         })
         money_format = workbook.add_format({
             "border": 1,
-            "num_format": '"Rp" #,##0.00',
+            "num_format": '"Rp" #,##0',
         })
 
         # Header
