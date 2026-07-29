@@ -32,7 +32,9 @@ class LaundryOrder(models.Model):
     )
     invoice_id = fields.Many2one('account.move', string="invoice", readonly=True, copy=False)
     delivered_date = fields.Datetime(readonly=False,string="Delivered Date")
-
+    stock_picking_id = fields.Many2one("stock.picking" , string='Stock Picking', readonly=True,)
+    picking_count = fields.Integer( compute='_compute_picking_count' )
+    
     @api.depends('partner_id')
     def _compute_order_count(self):
         for record in self:
@@ -56,6 +58,11 @@ class LaundryOrder(models.Model):
     def action_received(self):
         for record in self:
             record.state = "received"
+            record._create_stock_picking()
+    
+    def _compute_picking_count(self): 
+        for order in self: 
+            order.picking_count = 1 if order.stock_picking_id else 0
 
     def action_washing(self):
         for record in self:
@@ -147,3 +154,46 @@ class LaundryOrder(models.Model):
 
         for order in orders:
             template.send_mail(order.id, force_send=True)
+    
+    def action_view_picking(self): 
+        self.ensure_one() 
+        return { 
+            'type': 'ir.actions.act_window', 
+            'name': 'Stock Picking', 
+            'res_model': 'stock.picking', 
+            'view_mode': 'form', 
+            'res_id': self.stock_picking_id.id, 
+        }
+    
+    def _create_stock_picking(self):
+        StockPicking = self.env['stock.picking'] 
+        StockMove = self.env['stock.move']
+
+        # ambil operation type internal transfer 
+        picking_type = self.env.ref('stock.picking_type_internal')
+
+        # lokasi sumber dan tujuan 
+        source_location = self.env.ref('stock.stock_location_stock') 
+        dest_location = self.env.ref('stock.stock_location_customers')
+
+        picking = StockPicking.create({ 
+            'partner_id': self.partner_id.id, 
+            'picking_type_id': picking_type.id, 
+            'location_id': source_location.id, 
+            'location_dest_id': dest_location.id, 
+            'origin': self.name, 
+        })
+
+        for line in self.line_ids:
+            for product in line.service_id.consumable_product_ids:
+                StockMove.create({ 
+                    'name': product.name, 
+                    'product_id': product.id, 
+                    'product_uom_qty': line.quantity, 
+                    'product_uom': product.uom_id.id, 
+                    'picking_id': picking.id, 
+                    'location_id': source_location.id, 
+                    'location_dest_id': dest_location.id, 
+                })
+        
+        self.stock_picking_id = picking.id

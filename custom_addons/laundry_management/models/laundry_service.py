@@ -14,3 +14,4 @@ class LaundryService(models.Model):
     )
     active = fields.Boolean(default=True)
     description = fields.Text()
+    consumable_product_ids = fields.Many2many('product.product',string='Consumables')

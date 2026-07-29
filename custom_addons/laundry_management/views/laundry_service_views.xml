@@ -17,4 +17,29 @@
             </list>
         </field>
     </record>
+
+    <record id="laundry_service_view_form" model="ir.ui.view">
+        <field name="name">laundry.service.view.form</field>
+        <field name="model">laundry.service</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <div class="oe_title">
+                        <field name="consumable_product_ids" widget="many2many_tags" options="{'color_field': 'color'}"></field>
+                    </div>
+                    <group>
+                        <field name="unit" />
+                        <field name="description" />
+                        <field name="price" />
+                        <field name="active" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 </odoo>
