@@ -37,6 +37,7 @@ Long description of module's purpose
         'views/laundry_dashboard_views.xml',
         'views/export_report_wizard.xml',
         'views/account_move_views.xml',
+        'views/res_partner_views.xml',
         'data/cron.xml',
         'views/menus.xml'
     ],

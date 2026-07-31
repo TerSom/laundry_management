@@ -88,6 +88,12 @@ class LaundryOrder(models.Model):
 
             if not record.line_ids:
                 raise ValidationError("Please add at least one service.")
+            
+            partner = record.partner_id
+
+            if partner.is_laundry_member:
+                point = int(record.total_price / 1000) 
+                partner.laundry_point += point
 
             invoice_lines = []
             for line in record.line_ids:
@@ -104,6 +110,7 @@ class LaundryOrder(models.Model):
                 'invoice_date': fields.Date.today(),
                 'move_type': 'out_invoice',
                 'invoice_line_ids': invoice_lines,
+                'laundry_order_id': self.id,
             })
 
             record.invoice_id = invoice
@@ -199,28 +206,3 @@ class LaundryOrder(models.Model):
         
         self.stock_picking_id = picking.id
     
-    def action_send_whatsapp(self): 
-        self.ensure_one()
-
-        phone = self.partner_id.mobile or self.partner_id.phone
-
-        if not phone: 
-            raise ValidationError("Customer has no phone number.")
-        
-        # bersihkan nomor 
-        phone = phone.replace("+", "").replace(" ", "")
-
-        message = ( 
-            f"Halo {self.partner_id.name},%0A%0A" 
-            f"Laundry *{self.name}* sudah siap diambil.%0A" 
-            f"Total: Rp {self.total_price:,.0f}%0A%0A" 
-            f"Terima kasih." 
-        )
-
-        url = f"https://wa.me/{phone}?text={message}"
-
-        return { 
-            'type': 'ir.actions.act_url', 
-            'url': url, 
-            'target': 'new', 
-        }

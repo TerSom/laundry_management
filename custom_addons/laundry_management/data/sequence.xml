@@ -10,4 +10,13 @@
             <field name="number_increment">1</field>
         </record>
     </data>
+
+    <data noupdate="1">
+        <record id="seq_laundry_member" model="ir.sequence">
+            <field name="name">Laundry Member</field>
+            <field name="code">laundry.member</field>
+            <field name="prefix">MBR</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
 </odoo>

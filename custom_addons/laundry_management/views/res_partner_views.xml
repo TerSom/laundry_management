@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_partner_form_laundry" model="ir.ui.view">
+        <field name="name">res.partner.form.laundry</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Laundry Membership">
+                    <group>
+                        <field name="is_laundry_member"/>
+                        <field name="member_code" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="laundry_point" readonly="1"/>
+                        <field name="total_spent" readonly="1"/>
+                        <field name="membership_level" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
