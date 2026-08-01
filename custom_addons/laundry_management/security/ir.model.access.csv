@@ -9,6 +9,7 @@ access_laundry_order_manager,laundry.order.manager,model_laundry_order,group_lau
 access_laundry_order_line_user,laundry.order.line.user,model_laundry_order_line,group_laundry_user,1,1,1,0
 access_laundry_order_line_manager,laundry.order.line.manager,model_laundry_order_line,group_laundry_manager,1,1,1,1
 
+access_laundry_dashboard_user,laundry.dashboard.user,model_laundry_dashboard,group_laundry_user,1,0,0,0
 access_laundry_dashboard_manager,laundry.dashboard.manager,model_laundry_dashboard,group_laundry_manager,1,1,1,1
 
 access_laundry_export_report_user,laundry.export.report.user,model_export_report_wizard,group_laundry_user,1,1,1,0

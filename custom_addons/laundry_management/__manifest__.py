@@ -19,7 +19,7 @@ Long description of module's purpose
     'application': True,
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account','mail','stock'],
+    'depends': ['base','account','mail','stock','purchase'],
 
     # always loaded
     'data': [
@@ -39,7 +39,7 @@ Long description of module's purpose
         'views/account_move_views.xml',
         'views/res_partner_views.xml',
         'data/cron.xml',
-        'views/menus.xml'
+        'views/menus.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

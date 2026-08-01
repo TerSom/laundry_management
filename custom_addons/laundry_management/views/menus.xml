@@ -13,7 +13,7 @@
         name="Services"
         parent="laundry_order_menu"
         action="laundry_service_action"
-        sequence="12"/>
+        sequence="13"/>
 
     <!-- Orders -->
     <menuitem
@@ -21,7 +21,7 @@
         name="Orders"
         parent="laundry_order_menu"
         action="laundry_order_action"
-        sequence="13"/>
+        sequence="12"/>
 
     <!-- dashboard -->
     <menuitem
@@ -29,7 +29,7 @@
         name="Dashboard"
         parent="laundry_order_menu"
         action="action_laundry_dashboard_server"
-        sequence="11"/>
+        sequence="30"/>
     
     <!-- Report -->
     <menuitem
