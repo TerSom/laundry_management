@@ -32,9 +32,12 @@
                         <button name="action_view_picking" type="object" class="oe_stat_button" icon="fa-cubes">
                             <field name="picking_count" widget="statinfo" string="Inventory"/>
                         </button>
+                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-money">
+                            <field name="invoice_count" widget="statinfo" string="Invoice"/>
+                        </button>
                     </div>
                     <header>
-                        <button name="action_received" string="Received" type="object" class="btn-primary" invisible="state != 'draft'" />
+                        <button name="action_received" string="Received" type="object" class="btn-primary" invisible="not id or state != 'draft'" />
                         <button name="action_washing" string="Washing" type="object" class="btn-primary" invisible="state != 'received'" />
                         <button name="action_drying" string="Drying" type="object" class="btn-primary" invisible="state != 'washing'" />
                         <button name="action_ironing" string="Ironing" type="object" class="btn-primary" invisible="state != 'drying'" />

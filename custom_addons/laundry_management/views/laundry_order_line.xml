@@ -5,7 +5,7 @@
         <field name="name">laundry.order.line.view.list</field>
         <field name="model">laundry.order.line</field>
         <field name="arch" type="xml">
-            <list string=""> 
+            <list string="" editable="bottom"> 
                 <field name="service_id" />
                 <field name="quantity" />
                 <field name="price_unit" />

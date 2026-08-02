@@ -19,6 +19,19 @@ class ResPartner(models.Model):
         ('gold', 'Gold'), 
         ('platinum', 'Platinum'), 
     ], compute='_compute_membership_level', store=True)
+    last_laundry_date = fields.Date(compute='_compute_laundry_stats', store=True)
+    laundry_order_count = fields.Integer( compute='_compute_laundry_stats', store=True )
+
+    @api.depends("laundry_point")
+    def _compute_laundry_stats(self):
+        for partner in self:
+            orders = self.env['laundry.order'].search([
+                ('partner_id', '=', partner.id), 
+                ('state', '=', 'delivered')
+            ], order='date_received desc')
+
+            partner.laundry_order_count = len(orders)
+            partner.last_laundry_date = orders[:1].date_received if orders else False
 
     @api.depends("laundry_point")
     def _compute_membership_level(self):

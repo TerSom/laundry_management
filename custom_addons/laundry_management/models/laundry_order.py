@@ -32,6 +32,7 @@ class LaundryOrder(models.Model):
         compute="_compute_order_count"
     )
     invoice_id = fields.Many2one('account.move', string="invoice", readonly=True, copy=False)
+    invoice_count = fields.Integer(compute='_compute_invoice_count')
     delivered_date = fields.Datetime(readonly=False,string="Delivered Date")
     stock_picking_id = fields.Many2one("stock.picking" , string='Stock Picking', readonly=True,)
     picking_count = fields.Integer( compute='_compute_picking_count' )
@@ -64,6 +65,10 @@ class LaundryOrder(models.Model):
     def _compute_picking_count(self): 
         for order in self: 
             order.picking_count = 1 if order.stock_picking_id else 0
+    
+    def _compute_invoice_count(self):
+        for invoice in self:
+            invoice.invoice_count = 1 if invoice.invoice_id else 0
 
     def action_washing(self):
         for record in self:
@@ -110,7 +115,7 @@ class LaundryOrder(models.Model):
                 'invoice_date': fields.Date.today(),
                 'move_type': 'out_invoice',
                 'invoice_line_ids': invoice_lines,
-                'laundry_order_id': self.id,
+                'laundry_order_id': record.id,
             })
 
             record.invoice_id = invoice
@@ -137,6 +142,17 @@ class LaundryOrder(models.Model):
             "domain": [
             ("partner_id", "=", self.partner_id.id)
             ],
+        }
+    
+    def action_view_invoice(self):
+        self.ensure_one()
+
+        return{
+            "type" : "ir.actions.act_window",
+            "name" : "Account Move",
+            "res_model" : "account.move",
+            "view_mode" : "form",
+            "res_id" : self.invoice_id.id,
         }
 
     def action_send_email(self):

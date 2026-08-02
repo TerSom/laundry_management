@@ -14,6 +14,8 @@
                         <field name="laundry_point" readonly="1"/>
                         <field name="total_spent" readonly="1"/>
                         <field name="membership_level" readonly="1"/>
+                        <field name="last_laundry_date" />
+                        <field name="laundry_order_count" />
                     </group>
                 </page>
             </xpath>
