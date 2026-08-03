@@ -37,6 +37,9 @@
                         <field name="description" />
                         <field name="price" />
                         <field name="active" />
+                        <field name="need_dry" />
+                        <field name="need_iron" />
+                        <field name="need_wash" />
                     </group>
                 </sheet>
             </form>

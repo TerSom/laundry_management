@@ -36,6 +36,43 @@ class LaundryOrder(models.Model):
     delivered_date = fields.Datetime(readonly=False,string="Delivered Date")
     stock_picking_id = fields.Many2one("stock.picking" , string='Stock Picking', readonly=True,)
     picking_count = fields.Integer( compute='_compute_picking_count' )
+    has_wash = fields.Boolean(compute='_compute_process')
+    has_dry = fields.Boolean(compute='_compute_process')
+    has_iron = fields.Boolean(compute='_compute_process')
+    next_stage = fields.Char(compute='_compute_next_stage')
+
+    @api.depends('state', 'has_wash', 'has_dry', 'has_iron')
+    def _compute_next_stage(self):
+        for order in self:
+            if order.state == 'draft':
+                order.next_stage = 'received'
+            elif order.state == 'received':
+                if order.has_wash:
+                    order.next_stage = 'washing'
+                elif order.has_dry:
+                    order.next_stage = 'drying'
+                elif order.has_iron:
+                    order.next_stage = 'ironing'
+                else:
+                    order.next_stage = 'ready'
+            elif order.state == 'washing':
+                if order.has_dry:
+                    order.next_stage = 'drying'
+                elif order.has_iron:
+                    order.next_stage = 'ironing'
+                else:
+                    order.next_stage = 'ready'
+            elif order.state == 'drying':
+                if order.has_iron:
+                    order.next_stage = 'ironing'
+                else:
+                    order.next_stage = 'ready'
+            elif order.state == 'ironing':
+                order.next_stage = 'ready'
+            elif order.state == 'ready':
+                order.next_stage = 'delivered'
+            else:
+                order.next_stage = False
     
     @api.depends('partner_id')
     def _compute_order_count(self):
@@ -48,6 +85,34 @@ class LaundryOrder(models.Model):
     def _compute_total(self):
         for record in self:
             record.total_price = sum(record.line_ids.mapped('subtotal'))
+
+    @api.depends('line_ids.service_id')
+    def _compute_process(self):
+        for order in self:
+            services = order.line_ids.mapped('service_id')
+
+            order.has_wash = any(services.mapped('need_wash'))
+            order.has_dry = any(services.mapped('need_dry'))
+            order.has_iron = any(services.mapped('need_iron'))
+    
+    @api.constrains('line_ids')
+    def _check_same_process(self):
+        for order in self:
+            services = order.line_ids.mapped('service_id')
+
+            process_type = set()
+
+            for service in services:
+                process_type.add((
+                    service.need_wash,
+                    service.need_dry,
+                    service.need_iron,
+                ))
+            
+            if len(process_type) > 1:
+                raise ValidationError(
+                    "Please use services with the same process in one order."
+                )
 
     @api.model_create_multi
     def create(self,vals_list):

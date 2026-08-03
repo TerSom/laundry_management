@@ -24,7 +24,7 @@ class AccountMove(models.Model):
             f"telah selesai dan *siap untuk diambil*.%0A%0A"
             f"Rincian Pembayaran:%0A"
             f"Total: *Rp {self.amount_total:,.0f}*%0A%0A"
-            f"Kami tunggu kedatangan Anda. Terima kasih atas kepercayaannya. 🙏"
+            f"Kami tunggu kedatangan Anda. Terima kasih atas kepercayaannya."
         )
 
         url = f"https://wa.me/{phone}?text={message}"

@@ -36,11 +36,11 @@ class ResPartner(models.Model):
     @api.depends("laundry_point")
     def _compute_membership_level(self):
         for partner in self:
-            if partner.laundry_point >= 5000:
+            if partner.laundry_point >= 2000:
                 partner.membership_level = 'platinum'
-            elif partner.laundry_point >= 3000:
-                partner.membership_level = 'gold'
             elif partner.laundry_point >= 1000:
+                partner.membership_level = 'gold'
+            elif partner.laundry_point >= 500:
                 partner.membership_level = 'silver'
             else:
                 partner.membership_level = 'bronze'
@@ -54,10 +54,11 @@ class ResPartner(models.Model):
             ]) 
             partner.total_spent = sum(orders.mapped('total_price'))
     
-    @api.model 
-    def create(self, vals): 
-        if vals.get('is_laundry_member') and not vals.get('member_code'): 
-            vals['member_code'] = self.env['ir.sequence'].next_by_code( 
-                'laundry.member' 
-            )
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('is_laundry_member') and not vals.get('member_code'):
+                vals['member_code'] = self.env['ir.sequence'].next_by_code(
+                    'laundry.member'
+                )
+        return super().create(vals_list)
