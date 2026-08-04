@@ -63,6 +63,11 @@
                             </span>
                             <span t-esc="'Rp ' + '{:,}'.format(int(e.total_price)).replace(',', '.')"/>
                         </div>
+                        <div class="text-center mt-4">
+                            <img t-att-src="'/report/barcode/?barcode_type=QR&amp;value=%s&amp;width=120&amp;height=120' % e.get_portal_url()"/>
+                            <br/>
+                            <small> Scan to check laundry status </small>
+                        </div>
                     </div>
                 </t>
             </t>

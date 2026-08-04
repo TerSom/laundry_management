@@ -19,7 +19,7 @@ Long description of module's purpose
     'application': True,
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account','mail','stock','purchase'],
+    'depends': ['base','account','mail','stock','purchase','website'],
 
     # always loaded
     'data': [
@@ -38,6 +38,7 @@ Long description of module's purpose
         'views/export_report_wizard.xml',
         'views/account_move_views.xml',
         'views/res_partner_views.xml',
+        'report/portal_templates.xml',
         'data/cron.xml',
         'views/menus.xml',
     ],

@@ -1,6 +1,7 @@
 from odoo import models,fields,api,Command
 from odoo.exceptions import ValidationError
 from datetime import timedelta
+import secrets
 
 
 class LaundryOrder(models.Model):
@@ -40,6 +41,7 @@ class LaundryOrder(models.Model):
     has_dry = fields.Boolean(compute='_compute_process')
     has_iron = fields.Boolean(compute='_compute_process')
     next_stage = fields.Char(compute='_compute_next_stage')
+    access_token = fields.Char( string='Access Token', copy=False, readonly=True )
 
     @api.depends('state', 'has_wash', 'has_dry', 'has_iron')
     def _compute_next_stage(self):
@@ -115,12 +117,27 @@ class LaundryOrder(models.Model):
                 )
 
     @api.model_create_multi
-    def create(self,vals_list):
+    def create(self, vals_list):
         for vals in vals_list:
             if vals.get("name", "New") == "New":
                 vals["name"] = self.env['ir.sequence'].next_by_code("laundry.order") or "New"
 
-        return super().create(vals_list)
+        records = super().create(vals_list)
+
+        for rec in records:
+            if not rec.access_token:
+                rec.access_token = secrets.token_hex(16)
+
+        return records
+
+    def get_portal_url(self): 
+        self.ensure_one() 
+
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url') 
+
+        return ( 
+            f"{base_url}/laundry/status/{self.name}?token={self.access_token}" 
+        )
 
     def action_received(self):
         for record in self:

@@ -1,0 +1,83 @@
+<odoo>
+    <template id="portal_laundry_status" name="Laundry Status">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                            <div class="card-header bg-primary text-white text-center py-4">
+                                <h2 class="mb-1 fw-bold">Laundry Status</h2>
+                                <h4 class="mb-0 fw-semibold">
+                                    <t t-out="order.name"/>
+                                </h4>
+                            </div>
+                            <div class="card-body p-4 p-md-5">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="p-3 rounded-3 bg-light">
+                                            <p class="mb-2 text-muted small text-uppercase fw-bold">Customer</p>
+                                            <p class="mb-0 fs-5 fw-semibold">
+                                                <t t-out="order.partner_id.name"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 rounded-3 bg-light">
+                                            <p class="mb-2 text-muted small text-uppercase fw-bold">Status</p>
+                                            <span class="badge bg-info text-dark fs-6 px-3 py-2">
+                                                <t t-out="order.state"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 rounded-3 bg-light">
+                                            <p class="mb-2 text-muted small text-uppercase fw-bold">Total</p>
+                                            <p class="mb-0 fs-5 fw-semibold">Rp <t t-out="'{:,.0f}'.format(order.total_price)"/></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 rounded-3 bg-light">
+                                            <p class="mb-2 text-muted small text-uppercase fw-bold">Received</p>
+                                            <p class="mb-0 fs-5 fw-semibold">
+                                                <t t-out="order.date_received"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center mt-4">
+                                    <t t-if="order.partner_id.mobile">
+                                        <a t-att-href="'https://wa.me/%s' % order.partner_id.mobile.replace('+','').replace(' ','')" class="btn btn-success px-4 py-2">
+                                            Contact via WhatsApp
+                                        </a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_access_denied" name="Access Denied">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-lg rounded-4">
+                            <div class="card-body text-center p-5">
+                                <div class="display-1 mb-3">🔒</div>
+                                <h2 class="fw-bold mb-3">Access Denied</h2>
+                                <p class="text-muted mb-4">
+                                    Invalid access token. Please check your link or contact support.
+                                </p>
+                                <a href="/" class="btn btn-primary px-4">Back to Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

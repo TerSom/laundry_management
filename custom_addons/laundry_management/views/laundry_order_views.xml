@@ -58,6 +58,7 @@
                         <group>
                             <field name="total_price" />
                             <field name="delivered_date" invisible="state != 'delivered'" />
+                            <field name="access_token" />
                         </group>
                     </group>
                     <notebook>
