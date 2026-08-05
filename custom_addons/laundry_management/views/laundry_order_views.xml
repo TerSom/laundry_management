@@ -54,16 +54,23 @@
                         <group>
                             <field name="partner_id" />
                             <field name="date_received" />
+                            <field name="total_duration" readonly="1"/>
                         </group>
                         <group>
                             <field name="total_price" />
+
                             <field name="delivered_date" invisible="state != 'delivered'" />
-                            <field name="access_token" />
                         </group>
                     </group>
                     <notebook>
                         <page string="Items">
                             <field name="line_ids" />
+                        </page>
+                        <page string="Duration">
+                            <group>
+                                <field name="total_duration" readonly="1"/>
+                                <field name="estimated_ready_date" readonly="1"/>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>

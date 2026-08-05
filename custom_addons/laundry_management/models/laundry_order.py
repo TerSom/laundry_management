@@ -11,7 +11,7 @@ class LaundryOrder(models.Model):
 
     name = fields.Char(string="Order Number", required=True, copy=False, readonly=True, default="New")
     partner_id = fields.Many2one('res.partner', string="Customer",required=True)
-    date_received = fields.Date(string='Start Date',default=fields.Date.today)
+    date_received = fields.Datetime(string='Start Date',default=fields.Datetime.now)
     state = fields.Selection(
         selection=[
             ('draft','Draft'),
@@ -42,6 +42,29 @@ class LaundryOrder(models.Model):
     has_iron = fields.Boolean(compute='_compute_process')
     next_stage = fields.Char(compute='_compute_next_stage')
     access_token = fields.Char( string='Access Token', copy=False, readonly=True )
+    estimated_ready_date = fields.Datetime( string='Estimated Ready', compute='_compute_estimated_ready', store=True )
+    total_duration = fields.Float( string='Total Duration (Hours)', compute='_compute_estimated_ready', store=True )
+
+    @api.depends( 'date_received', 'line_ids.service_id', 'line_ids.quantity' )
+    def _compute_estimated_ready(self):
+        for order in self:
+            duration = 0.0
+
+            for line in order.line_ids:
+                service = line.service_id
+
+                duration += (
+                    service.wash_duration + service.dry_duration + service.iron_duration
+                )
+            
+            order.total_duration = duration
+
+            if order.date_received:
+                order.estimated_ready_date = (
+                    order.date_received + timedelta(hours=duration)
+                )
+            else:
+                order.estimated_ready_date = False
 
     @api.depends('state', 'has_wash', 'has_dry', 'has_iron')
     def _compute_next_stage(self):

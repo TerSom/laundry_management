@@ -18,3 +18,16 @@ class LaundryService(models.Model):
     need_wash = fields.Boolean(default=False)
     need_dry = fields.Boolean(default=False)
     need_iron = fields.Boolean(default=False)
+    wash_duration = fields.Float(default=0.0 ,string='Wash Duration (Hours)')
+    dry_duration = fields.Float(default=0.0, string='Dry Duration (Hours)')
+    iron_duration = fields.Float(default=0.0, string='Iron Duration (Hours)')
+
+    @api.onchange('need_wash','need_dry','need_iron')
+    def _onchange_need_wash(self):
+        if self.need_wash:
+            self.wash_duration = 2.0
+        elif self.need_dry:
+            self.dry_duration = 1.0
+        elif self.need_iron:
+            self.iron_duration = 0.5
+

@@ -33,14 +33,27 @@
                         <field name="consumable_product_ids" widget="many2many_tags" options="{'color_field': 'color'}"></field>
                     </div>
                     <group>
-                        <field name="unit" />
-                        <field name="description" />
-                        <field name="price" />
-                        <field name="active" />
-                        <field name="need_dry" />
-                        <field name="need_iron" />
-                        <field name="need_wash" />
+                        <group>
+                            <field name="unit" />
+                            <field name="description" />
+                        </group>
+                        <group>
+                            <field name="price" />
+                            <field name="active" />
+                        </group>
                     </group>
+                    <notebook>
+                        <page name="service options" string="Service Options">
+                            <group>
+                                <field name="need_dry" />
+                                <field name="need_iron" />
+                                <field name="need_wash" />
+                                <field name="iron_duration" invisible='not need_iron' />
+                                <field name="dry_duration" invisible='not need_dry'/>
+                                <field name="wash_duration" invisible='not need_wash'/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
