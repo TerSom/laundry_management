@@ -55,7 +55,7 @@ class LaundryOrder(models.Model):
 
                 duration += (
                     service.wash_duration + service.dry_duration + service.iron_duration
-                )
+                ) * max(1, line.quantity / 7)
             
             order.total_duration = duration
 

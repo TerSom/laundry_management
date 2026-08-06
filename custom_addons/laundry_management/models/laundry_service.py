@@ -25,9 +25,9 @@ class LaundryService(models.Model):
     @api.onchange('need_wash','need_dry','need_iron')
     def _onchange_need_wash(self):
         if self.need_wash:
-            self.wash_duration = 2.0
+            self.wash_duration = 0.45
         elif self.need_dry:
-            self.dry_duration = 1.0
+            self.dry_duration = 0.45
         elif self.need_iron:
-            self.iron_duration = 0.5
+            self.iron_duration = 0.15
 

@@ -47,7 +47,7 @@
 
                                 <div class="d-flex justify-content-center mt-4">
                                     <t t-if="order.partner_id.mobile">
-                                        <a t-att-href="'https://wa.me/%s' % order.partner_id.mobile.replace('+','').replace(' ','')" class="btn btn-success px-4 py-2">
+                                        <a t-att-href="'https://wa.me/%s' % order.partner_id.mobile.replace('+','').replace(' ','') or order.partner_id.phone.replace('+','').replace(' ','')" class="btn btn-success px-4 py-2">
                                             Contact via WhatsApp
                                         </a>
                                     </t>

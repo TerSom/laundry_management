@@ -20,7 +20,7 @@
         id="laundry_order_menu_orders"
         name="Orders"
         parent="laundry_order_menu"
-        action="laundry_order_action"
+        action="laundry_order_actions"
         sequence="12"/>
 
     <!-- dashboard -->
@@ -46,6 +46,5 @@
         parent="laundry_report_menu_reports"
         action="action_export_report_wizard"
         sequence="10"/>
-        
-    
+
 </odoo>
