@@ -19,7 +19,7 @@ Long description of module's purpose
     'application': True,
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account','mail','stock','purchase','website'],
+    'depends': ['base','account','mail','stock','purchase','website','point_of_sale'],
 
     # always loaded
     'data': [

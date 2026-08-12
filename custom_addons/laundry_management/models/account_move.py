@@ -49,10 +49,10 @@ class AccountMove(models.Model):
         message = (
             f"Yth. {self.partner_id.name},\n\n"
             f"Dengan ini kami informasikan bahwa pesanan laundry Anda dengan nomor *{order_name}* "
-            f"telah selesai dan *siap untuk diambil*.\n\n"
+            f"telah selesai dan *sudah sampai*.\n\n"
             f"Rincian Pembayaran:\n"
             f"Total: *Rp {self.amount_total:,.0f}*\n\n"
-            f"Kami tunggu kedatangan Anda. Terima kasih atas kepercayaannya."
+            f"Terima kasih atas kepercayaannya."
         )
 
         url = f"{waha_url}/api/sendText"
