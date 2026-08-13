@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- LIST VIEW -->
+        <record id="library_loan_view_tree" model="ir.ui.view">
+            <field name="name">library.loan.view.tree</field>
+            <field name="model">library.loan</field>
+            <field name="arch" type="xml">
+                <list string="Loans" decoration-danger="late_fee > 0">
+                    <field name="name" />
+                    <field name="member_id" />
+                    <field name="book_id" />
+                    <field name="date_borrow" />
+                    <field name="date_return_expected" />
+                    <field name="state" />
+                    <field name="late_fee" />
+                </list>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="library_loan_view_form" model="ir.ui.view">
+            <field name="name">library.loan.view.form</field>
+            <field name="model">library.loan</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,ongoing,returned" />
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Informasi Utama">
+                                <field name="member_id"/>
+                                <field name="book_id"/>
+                            </group>
+                            <group string="Tanggal">
+                                <field name="date_borrow"/>
+                                <field name="date_return_expected"/>
+                                <field name="date_return_actual"/>
+                                <field name="currency_id" invisible='1' />
+                                <field name="late_fee" widget="monetary"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
